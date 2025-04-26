@@ -1,0 +1,104 @@
+services:
+  discovery:
+    image: hashicorp/consul:latest
+    #command: agent -dev -client=0.0.0.0
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    hostname: rabbit-nimp
+    restart: always
+
+#  gateway:
+#    build : ../gateway
+#    ports:
+#      - "8080:8080"
+#    restart: always
+#    environment:
+#      - CONSUL_HOST=discovery
+#      - CONSUL_PORT=8500
+#      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - discovery
+
+  ### Mise en place des base de données
+  bdd-authentification:
+    image: mysql
+    container_name: bdd-authentification
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+  bdd-jeu:
+    image: mysql
+    container_name: bdd-jeu
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    healthcheck:
+        test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+        interval: 10s
+        retries: 5
+        start_period: 20s
+        timeout: 5s
+
+  bdd-actualite:
+    image: mysql
+    container_name: bdd-actualite
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3308:3306"
+    healthcheck:
+        test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+        interval: 10s
+        retries: 5
+        start_period: 20s
+        timeout: 5s
+
+  bdd-recompense:
+    image: mysql
+    container_name: bdd-recompense
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3309:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s

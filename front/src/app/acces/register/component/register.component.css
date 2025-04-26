@@ -1,0 +1,157 @@
+
+.register-container {
+  width: 100vw;
+  height: auto;
+  display: flex;
+}
+
+h3.form-label {
+  margin-bottom: 0rem;
+}
+
+.input-text {
+  line-height: 0.9!important;
+}
+
+.retour{
+  color: white;
+  background-color: #333;
+}
+
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centre horizontalement l'image */
+  margin-bottom: 20px; /* Ajoute un espace après l'image */
+}
+
+.logo {
+  max-width: 50%; /* Ajuste la taille de l'image par rapport à son conteneur */
+  height: auto;
+  display: block;
+}
+
+.box{
+  width: 80%;
+}
+
+.modif {
+  margin-bottom: 6px;
+}
+
+.inscri-button{
+  margin-top: 20px;;
+}
+
+.color-butt{
+  background-color: gray!important;
+  border-color: gray!important;
+}
+
+
+.left-panel {
+  width: 50%;
+  background: url('../../../../assets/login-register-image.jpg') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+.left-panel h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.left-panel p {
+  font-size: 1.2rem;
+}
+
+
+.right-panel {
+  width: 50%;
+  background: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Aligne le contenu en haut */
+  align-items: center;
+  position: relative; 
+}
+
+
+.btn-primary {
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  background-color: #333;
+}
+
+
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+
+.left-panel {
+  width: 50%;
+  background: url('../../../../assets/login-register-image.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.right-panel {
+  width: 50%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #333;
+}
+
+.btn {
+  width: 50%;
+  text-align: center;
+  justify-content: center;
+  color: white;
+  border: white 1px solid;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+.form-label{
+  color: white;
+}
+
+.back-arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2em;
+  transition: background 0.3s;
+}

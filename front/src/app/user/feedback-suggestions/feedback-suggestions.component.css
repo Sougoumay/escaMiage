@@ -1,0 +1,45 @@
+
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  margin: 0;
+  height: 100vh;
+}
+
+.feedback-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; /* Ajuste la largeur selon ton besoin */
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.submitButton {
+  background: #c0392b;
+}
+
+
+.back-arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2em;
+  transition: background 0.3s;
+}
+
+
+
+
+

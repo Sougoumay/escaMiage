@@ -1,0 +1,18 @@
+service-notification/.vs/
+
+
+# Dossiers de build et de compilation
+service-notification/bin
+service-notification/obj
+
+# Fichiers spécifiques à .NET
+service-notification/*.pdb
+service-notification/*.exe
+service-notification/*.dll
+service-notification/*.cache
+service-notification/*.sourcelink.json
+
+# Fichiers liés aux outils
+*.user
+*.vs/
+

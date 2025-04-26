@@ -1,0 +1,81 @@
+body {
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-size: 15px;
+  background-color: #222222;
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Empêche les barres de défilement */
+
+
+}
+
+
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+
+.left-panel {
+  width: 50%;
+  background: url('../../../../assets/login-register-image.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centre horizontalement l'image */
+  margin-bottom: 20px; /* Ajoute un espace après l'image */
+}
+
+.logo {
+  max-width: 50%; /* Ajuste la taille de l'image par rapport à son conteneur */
+  height: auto;
+  display: block;
+}
+
+
+.right-panel {
+  width: 50%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #222222;
+}
+
+.btn {
+  width: 50%;
+  text-align: center;
+  justify-content: center;
+  color: white;
+  border: #696666 1px solid;
+  display: flex;
+  align-items: center;
+  background-color: #696666;
+}
+
+.descript{
+  font-size: 21px;
+}
+
+.infos{
+  font-size: 18px;
+}
+.form-label{
+  color: white;
+}

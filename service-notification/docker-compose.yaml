@@ -1,0 +1,75 @@
+services:
+  discovery:
+    image: hashicorp/consul:latest
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    restart: always
+    networks:
+      - notification-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    container_name: rabbitmq
+    hostname: rabbit-nimp
+    restart: always
+    networks:
+      - notification-network
+
+  service-notification:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - RABBIT_HOST=rabbitmq
+      - DB_HOST=bdd-notification
+      - DB_PORT=3306
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_NAME=escamiage
+    depends_on:
+      bdd-notification:
+        condition: service_healthy
+      discovery:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - notification-network
+
+  bdd-notification:
+    image: mysql
+    container_name: bdd-notification
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: escamiage
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3310:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+    volumes:
+      - db_notification:/var/lib/mysql
+    networks:
+      - notification-network
+
+networks:
+  notification-network:
+    driver: bridge
+
+volumes:
+  db_notification:

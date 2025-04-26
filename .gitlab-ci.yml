@@ -1,0 +1,11 @@
+include:
+  - local: 'test.yml'
+  - local: 'testIntegration.yml'
+  - local: 'deploy-services.yml'
+  - local: 'master-pdicost.yml'
+
+stages:
+  - test
+  - docker
+  - testI
+  - sync

@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+#  discovery:
+#    image: hashicorp/consul:latest
+#    #command: agent -dev -client=0.0.0.0
+#    environment:
+#      - CONSUL_BIND_INTERFACE=eth0
+#    ports:
+#      - "8500:8500"
+#      - "8600:8600/udp"
+#    restart: always
+
+  bdd-authentification:
+    image: mysql:9.1
+    container_name: bdd-actualite
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: escamiage
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3308:3306"

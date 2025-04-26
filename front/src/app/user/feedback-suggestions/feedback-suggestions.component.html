@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/user-dashboard" class="back-arrow">⬅ Retour</a>
+<div class="feedback-container">
+
+
+  <div class="container mt-5">
+    <h2>Créer une suggestion ou un feedback : </h2>
+    <br>
+
+    <form [formGroup]="suggFeedForm" (ngSubmit)="creation($event)">
+
+
+      <div class="mb-3">
+        <label class="form-label">Quel est votre besoin/problème ?</label>
+        <input type="text" class="form-control" formControlName="besoin">
+        <small class="text-danger" *ngIf="suggFeedForm.get('besoin')?.invalid && suggFeedForm.get('besoin')?.touched">
+          La question est obligatoire pour valider le formulaire.
+        </small>
+      </div>
+
+      <button type="submit" class="btn submitButton w-50" [disabled]="suggFeedForm.invalid">Envoyer</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

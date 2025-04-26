@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="login-container">
+
+  <div class="left-panel">
+    
+  </div>
+
+  <div class="right-panel">
+    <div class="logo-container">
+      <img class = "logo" src="../../../../assets/logo.jpg" >
+     </div>
+    <div class="box">
+    <h3 class="form-label" style="font-weight: bold;">Entrée Restreinte ⚠️</h3>
+    <p class="form-label descript">{{phraselog}}</p>
+
+    <br>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login($event)">
+      <div>
+        <label class="form-label infos">{{phraseId}}</label>
+        <input type="email" (input)="suppError('login');" class="form-control" formControlName="email" placeholder="username@gmail.com">
+        <small class="text-danger" *ngIf="submitted && this.error_login" >
+          L'email est requis ou son format est invalide.
+        </small>
+      </div>
+      <br>
+      <div>
+        <label class="form-label infos">{{phraseMdp}}</label>
+        <input type="password" (input)="suppError('login')" class="form-control" formControlName="password" placeholder="********">
+        <small class="text-danger" *ngIf="submitted && this.error_mdp" class="text-danger">
+            Minimum 8 caractères.
+            Doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.
+        </small>
+      </div>
+      <br>
+
+      <button class="btn btn-secondary w-100 align-items-center" type="submit" >🔓 Entrer dans le système</button>
+      <small class="text-danger d-block text-center mt-2" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </small>
+
+      <div class="text-center mt-2">
+        <span class="form-label">Nouvel utilisateur ? <a href="/register" class="text-primary">Inscription</a></span>
+      </div>
+    </form>
+  </div>
+
+</div>
+</div>
+
+
+</body>
+</html>

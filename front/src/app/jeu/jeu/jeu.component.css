@@ -1,0 +1,355 @@
+
+
+.fade {
+  z-index: 1055 !important; 
+}
+
+.titree{
+  font-size: 21px!important;
+}
+
+.opaqueQ{
+  background-color: rgba(205, 21, 39, 0.7)!important;
+  border-color: rgba(205, 21, 39, 0.7)!important ;
+}
+/* Global */
+body {
+  background-color: #222; /* Fond gris foncé */
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  /* display: flex; */
+  margin: 0;
+  height: 100vh;
+}
+
+.modal {
+  z-index: 1055;
+  position: fixed;
+  top: 20%;
+  bottom: 30%;
+}
+
+
+
+.imgEscapeRoom {
+  position: relative; /* Nécessaire pour que le bouton soit positionné par rapport à cette div */
+  width: 100vw;
+  height: 100vh;
+}
+
+.boutonsEnHautAGauche{
+  position: absolute; /* Le bouton sera positionné par rapport à .imgEscapeRoom */
+  top: 20px; /* Ajuste la distance du bouton par rapport au haut de l'image */
+  left: 20px;
+  display: flex;
+  flex-direction: column; /* Aligne les boutons verticalement */
+  gap: 10px; /* Ajoute un espace entre les boutons */
+  z-index: 1060;
+}
+
+.btn-info {
+  background-color: rgba(1, 59, 113, 0.7); /* Couleur de fond rouge avec transparence */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1060; /* Le bouton sera au-dessus de l'image */
+}
+
+.btn-info:hover {
+  background-color: rgb(75, 143, 189); /* Changer la couleur au survol */
+}
+
+.inventory{
+  z-index: 1060;
+}
+
+
+.quit-button {
+  background-color: rgba(255, 0, 0, 0.7); /* Couleur de fond rouge avec transparence */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1060; /* Le bouton sera au-dessus de l'image */
+}
+
+.quit-button:hover {
+  background-color: rgba(255, 0, 0, 1); /* Changer la couleur au survol */
+}
+
+
+
+img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* ✅ STYLE GLOBAL DE LA MODALE */
+.modal-content {
+  background: rgba(30, 30, 30, 0.95); /* Fond semi-transparent */
+  backdrop-filter: blur(10px); /* Effet de flou derrière */
+  border-radius: 12px; /* Coins arrondis */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6); /* Ombre élégante */
+  color: #ddd; /* Texte plus doux */
+}
+
+/* ✅ EN-TÊTE DE LA MODALE */
+.modal-header {
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;
+  text-align: center;
+}
+
+.modal-title {
+  /*font-weight: bold;*/
+  font-size: 1.3rem;
+  color: white;
+  width: 100%;
+  text-align: center; /* Assure que le texte du titre est bien centré */
+  font-size: 1.5rem;
+}
+
+#boutonsEnHautAGauche {
+  z-index: 1060 !important;
+}
+
+.btn-close {
+  filter: invert(1); /* Rend la croix blanche */
+}
+
+.modal-body .form-control {
+  margin: 0 auto;
+  display: block;
+  width: 80%; /* Ajuste la largeur du champ */
+}
+
+/* ✅ CORPS DE LA MODALE */
+.modal-body {
+  font-size: 1rem;
+  color: #ddd;
+  text-align: center; /* Centre le texte */
+}
+
+/* ✅ INPUT DE RÉPONSE */
+input.form-control {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+input.form-control:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+}
+
+/* ✅ MESSAGE D'ERREUR */
+.text-danger {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* ✅ FOOTER DE LA MODALE */
+.modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ BOUTONS */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ✅ ANIMATION D'OUVERTURE DE LA MODALE */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+/* Application de l'animation */
+.modal.fade .modal-dialog {
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+.modal.fade.show .modal-dialog {
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+.modal.fade.hide .modal-dialog {
+  animation: modalFadeOut 0.4s ease-in;
+}
+
+.chronometer {
+  position: absolute;
+  top: 10px; /* Ajuste la position en haut de l'image */
+  left: 50%;
+  transform: translateX(-50%); /* Centrage horizontal */
+  font-size: 2rem; /* Taille du texte */
+  color: #fff; /* Couleur du texte */
+  background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+  padding: 10px 20px; /* Espacement autour du texte */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7); /* Ombre autour du chronomètre */
+  font-family: 'Courier New', monospace; /* Police de caractère */
+  text-align: center;
+  z-index: 1060; /* Pour que le chronomètre soit toujours au-dessus de l'image */
+}
+
+/* Animation pour le chronomètre si nécessaire (optionnel) */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Application de l'animation au chronomètre */
+.clignotage span {
+  animation: blink 1s infinite; /* Fait clignoter légèrement le chronomètre */
+}
+.blanc {
+  color: rgb(129, 129, 129)!important;
+}
+
+@keyframes flashRed {
+  0% {
+    color: white;
+  }
+  50% {
+    color: rgb(252, 73, 73); /* Couleur rouge */
+  }
+  100% {
+    color: white;
+  }
+}
+
+.flash-animation {
+  animation: flashRed 1s infinite; /* Clignote toutes les secondes */
+}
+
+/* Style de l'inventaire */
+.inventory {
+  display: flex;
+  flex-direction: column; /* Affichage vertical */
+  align-items: center; /* Centre les éléments */
+  position: absolute;
+  top: 0;
+  right: 0px; /* Positionne à droite */
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  max-height: 100%; /* Ne dépasse pas la hauteur de l’image */
+  background: rgba(0, 0, 0, 0.6); /* Fond semi-transparent pour s'adapter au style */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  /*overflow-y: auto;*/ /* Défilement interne si trop d'éléments */
+}
+
+/* Conteneur des lettres */
+.inventory-items {
+  display: flex;
+  flex-direction: column; /* Range les lettres verticalement */
+  gap: 10px; /* Espacement entre les lettres */
+  height: 100%; /* Prend toute la hauteur dispo */
+  justify-content: space-evenly; /* Répartit les lettres uniformément */
+}
+
+/* Style des lettres */
+.inventory-items span {
+  width: 50px; /* Largeur des cases */
+  height: 50px; /* Hauteur des cases */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: rgba(63, 63, 63, 0.5); /* Marron pour s’adapter au style de l’image */
+  border: 2px solid rgba(71, 135, 147, 1); /* Bordure dorée pour le côté élégant */
+  border-radius: 5px;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeInRight {
+  from {
+    transform: translateX(100px); 
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.inventory {
+  animation: fadeInRight 0.8s ease-out; 
+}
+
+
+.inventory-items span {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inventory-items span:hover {
+  transform: scale(1.1); 
+  box-shadow: 0 0 10px rgba(71, 135, 147, 1);
+  ; 
+}

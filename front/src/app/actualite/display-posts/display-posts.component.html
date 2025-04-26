@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+  <h2>Liste des posts</h2>
+
+  <div *ngFor="let post of posts" class="post-card">
+    <h3>Utilisateur #{{ post.utilisateurDTO }}</h3>
+    <p>{{ post.contenu }}</p>
+
+    <img *ngIf="post.imagePost" [src]="getImageUrl(post.imagePost)" alt="Image du post">
+    <img *ngIf="!post.imagePost" src="assets/no-image.png" alt="Aucune image">
+
+    <div class="reactions">
+      <span *ngFor="let reaction of post.reactionDTOList">
+        👍 {{ reaction.typeReaction }} ({{ reaction.idUtilisateur }})
+      </span>
+    </div>
+    <button class="btn btn-warning" (click)="modifierPost(post.idPost!)">Modifier</button>
+    <button class="btn btn-danger" (click)="supprimerPost(post.idPost!)">Supprimer</button>
+  </div>
+</div>
+</body>
+</html>

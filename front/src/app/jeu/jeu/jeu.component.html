@@ -1,0 +1,242 @@
+<body>
+  <div class="imgEscapeRoom">
+    <!-- Le bouton "Quitter la partie" est maintenant en haut à gauche de l'image -->
+    <div class="boutonsEnHautAGauche" #boutonsEnHautAGauche>
+      <!-- <button class="quit-button" (click)="showModal('annulerPartieModale')">Quitter</button> -->
+      <button class="quit-button" (click)="afficherQuestionMaster()">Quitter</button>
+      <button class="btn btn-info" (click)="toggleFullScreen()">{{ isFullScreen ? 'Full screen' : 'Full screen' }}</button>
+    </div>
+
+    <img src="../../../assets/escape_game_image.jpg" usemap="#image-map">
+
+    <div class="chronometer">
+      <span id="chronoTimer" class="clignotage">{{formattedTime}}</span>
+    </div>
+
+    <div class="inventory">
+      
+      <div *ngFor="let letter of listeInventaire; let i = index" class="inventory-items">
+        <span>{{letter}}</span>
+      </div>
+    </div>
+    
+    <!--les zones cliquables de l'image -->
+    <map name="image-map">
+      <area alt="ecranOrdi" coords="795,367,1079,372,1079,541,802,571" shape="poly" (click)="openModal('💻 L\'Énigme du Code Brisé', this.donnees?.[0]?.id ?? null)">
+      <area alt="grandTableauàDroite" coords="1142,204,1522,71,1498,374,1139,388" shape="poly" (click)="openModal('🖼️ Le Tableau Crypté', this.donnees?.[1]?.id ?? null)">
+      <area alt="feuilleAGaucheEnBas" coords="208,964,387,872,558,956,460,1021,303,1022,295,1021,276,1007" shape="poly" (click)="openModal('📜🔍 Le Message Encrypté', this.donnees?.[2]?.id ?? null)">
+      <area alt="BoiteEnHautCentre" coords="594,79,667,89,666,160,598,150" shape="poly" (click)="openModal('📦 La Boîte des Archives', this.donnees?.[3]?.id ?? null)">
+      <area alt="petitPapierCentreBas" coords="822,981,906,961,881,910,824,917,811,947" shape="poly" (click)="openModal('📜 L\'Information Égaré', this.donnees?.[4]?.id ?? null)">
+      <area alt="petiteBoiteFenetre" coords="274,416,339,416,339,439,272,437" shape="poly" (click)="openModal('📂🔍 Les Archives Suspendues', this.donnees?.[5]?.id ?? null)">
+      <area alt="deuxiemeLivrePileDroite" coords="1225,573,1323,595,1405,586,1409,611,1325,625,1228,601" shape="poly" (click)="openModal('📖🔑 Le Livre du Savoir Caché', this.donnees?.[6]?.id ?? null)">
+      <area alt="dossierEtageredroite" coords="1696,445,1769,446,1756,623,1685,603" shape="poly" (click)="openModal('📂🔒 Le Dossier Oublié', this.donnees?.[7]?.id ?? null)">
+      <area alt="sofa" (click)="openModal('Le Secret Caché sous le Coussinet 🛋️📜', this.donnees?.[8]?.id ?? null)" coords="371,430,371,449,379,467,389,525,387,549,385,565,395,589,406,601,417,649,466,633,474,681,514,676,515,647,644,625,670,647,675,619,678,601,658,573,656,560,666,549,661,532,634,518,607,518,593,500,598,483,606,462,609,448,606,429,590,419,558,421,530,402,511,389,496,386,471,375,465,383,454,391,441,394,422,410,403,423" shape="poly">
+      <!-- <area alt="livreEtagereGauche" coords="83,546,97,543,107,639,91,646" shape="poly" (click)="openModal('📂💾 Le Secret des Archives', this.donnees?.[8]?.id ?? null)"> -->
+      <area alt="papierdroiteFroisse" coords="1440,725,1445,734,1511,757,1576,755,1527,719,1530,715,1517,709" shape="poly" (click)="openModal('📝💻 Le Papier Clandestin', this.donnees?.[9]?.id ?? null)">
+      <area alt="livreEtagereCentreFondFoncé" coords="688,336,710,336,713,415,688,415" shape="poly" (click)="openModal('📂🔮 Le Dossier Crypté', this.donnees?.[10]?.id ?? null)">
+      <area alt="papierSortantImprimante" coords="354,663,465,635,480,712,373,745" shape="poly" (click)="openModal('📝💾 Le Message Imprimé', this.donnees?.[11]?.id ?? null)">
+      <area alt="2emeLivreSousTableau" coords="1296,405,1312,405,1310,494,1293,491" shape="poly" (click)="openModal('📂🔮 Le Dossier Crypté', this.donnees?.[12]?.id ?? null)">
+      <area alt="styloParleur" coords="1163,768,1180,787,1289,823,1294,810,1283,801,1194,772" shape="poly" (click)="openModal('🖊️⚡ Le Stylo Numérique', this.donnees?.[13]?.id ?? null)">
+      <area alt="tableauPetit" coords="1125,263,1122,206,1084,220,1084,269" shape="poly" (click)="openModal('🖼️💻 Le Code Accroché', this.donnees?.[14]?.id ?? null)">    
+    </map>
+  </div>
+
+  <!-- Le modal (la popup) ENIGME -->
+  <div class="modal fade" id="enigmeModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- En-tête de la modale -->
+        <div class="modal-header">
+          <h3 class="modal-title" id="enigmeModalLabel">{{ modalTitle }}</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+
+        <div class="modal-body">
+          <form [formGroup]="reponseForm" (ngSubmit)="repondreAEnigme()">
+            <h5 class="modal-title">{{ modalContent }}</h5>
+            <p class="text-muted blanc">Nb tentatives erronées : {{ nbTentatives }} </p>
+            <div class="mb-3">
+              <label for="reponse" *ngIf="indice" class="form-label">{{texteIndice}}</label>
+              <input id="reponse" autocomplete="off" autocomplete="off" type="text" class="form-control" formControlName="reponse" (input)="resetError()">
+
+              <div class="text-danger" *ngIf="reponseVide">
+                {{this.currentErrorMessage}}
+              </div>
+              <div class="text-danger mt-1" *ngIf="reponseIncorrecte">
+                {{this.reponseIncorrecteEnigme}}
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Footer de la modale -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary" (click)="repondreAEnigme()">Soumettre</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Le modal (la popup) REUSSITE-->
+<div class="modal fade" id="enigmeResolueModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h3 class="modal-title" id="enigmeResolueModalLabel">🎉 Félicitations !</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        <h5 class="modal-title">Tu as résolu {{ modalTitle }} ! 🏆</h5>
+        <p class="text-muted blanc">Tu es un véritable détective ! 🔍😎</p>
+      </div>
+
+      <!-- Footer de la modale -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Le modal (la popup) ENIGME REUSSI-->
+ <div class="modal fade" id="enigmeRepondue" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h3 class="modal-title" id="enigmeModalLabel">{{ modalTitle }}</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        
+          <p class="text-muted blanc">Nb tentatives erronées: {{ nbTentatives }} </p>
+          <div class="mb-3">
+            
+            <div>
+              <h5>
+                  {{phraseReussiteAfficher}}
+              </h5>
+            </div>
+
+          </div>
+      </div>
+
+      <!-- Footer de la modale -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Le modal (la popup) QUESTION MASTER-->
+<div class="modal fade" id="enigmeMaster" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="enigmeModalLabel">🔑 Question MASTER : La Clé de la Victoire</h4>
+        <!-- Le bouton de fermeture est supprimé -->
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="reponseForm" (ngSubmit)="repondreMaster()">
+          <p class="titree">{{ phraseAnnonceMaster }}</p>
+          <p class="text-muted blanc">Nb tentatives erronées : {{this.nbTentativesMaster}} </p>
+          <div class="mb-3">
+            <label for="reponse" *ngIf="indiceMaster" class="form-label">{{texteIndiceMaster}}</label>
+            <input id="reponse" autocomplete="off" type="text" class="form-control" formControlName="reponse" (input)="resetError()">
+
+            <div class="text-danger" *ngIf="reponseVide">
+              {{currentErrorMessage}}
+            </div>
+            <div class="text-danger mt-1" *ngIf="reponseIncorrecte">
+              {{reponseIncorrecteMsg}}
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer de la modale -->
+      <div class="modal-footer">
+        <!-- Le bouton de fermeture est supprimé -->
+        <button type="submit" class="btn btn-primary" (click)="repondreMaster()">Soumettre</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Le modal (la popup) QUESTION MASTER REUSSIEEEEEEEEEEE-->
+<div class="modal fade" id="enigmeMasterReussie" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="enigmeModalLabel">🎮 Game Over ? Non, Game Master !</h4>
+        <!-- Le bouton de fermeture est supprimé -->
+      </div>
+
+      <div class="modal-body">
+        
+          <p class="titree">Tu as surmonté toutes les énigmes, déjoué les pièges, et répondu avec brio ! 🧠💡 Tu viens de prouver que tu es le boss final de l’escape game MIAGE ! 🏆🔥</p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Le modal (la popup) CONFIRMATION ANNULATION PARTIE -->
+<div class="modal fade" id="annulerPartieModale" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="enigmeModalLabel">⚠️ Abandonner… ou persévérer ?</h4>
+      </div>
+
+      <div class="modal-body">
+        <p class="titree">Le chronomètre tourne… Une seule décision, et tout bascule. 🕰️ Veux-tu vraiment quitter cette partie et laisser l’algorithme gagner ?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger opaqueQ" (click)="annulerPartie()">❌ Oui, fuir</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">🔄 Non, continuer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Le modal (la popup) ANNULATION REUSSIE-->
+<div class="modal fade" id="annulationReussie" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- En-tête de la modale -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="enigmeModalLabel">🛑 Partie annulée... ou simple repli stratégique ?</h4>
+        <!-- Le bouton de fermeture est supprimé -->
+      </div>
+
+      <div class="modal-body">
+        
+          <p class="titree">Parfois, la meilleure décision est de se retirer pour mieux revenir. L'algorithme s'endort… pour l’instant. ⏳
+            <br><br>Tu pourras toujours retenter ta chance et prouver que l’intelligence et la logique triomphent sur le chaos.
+          </p>
+      </div>
+      <div class="modal-footer">
+        <p class="titree">Reviens quand tu seras prêt... l’énigme t’attendra. 🔄</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+

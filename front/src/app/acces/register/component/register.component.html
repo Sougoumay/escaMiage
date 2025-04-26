@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<button onclick="window.location.href='/login'" class="back-arrow retour">⬅ Retour</button>
+<div class="register-container">
+
+  <div class="left-panel">
+    
+  </div>
+
+  <div class="right-panel">
+    <div class="logo-container">
+      <img class = "logo" src="../../../../assets/logo.jpg" >
+     </div>
+    <div class="box">
+    <h3 class="form-label" style="font-weight: bold;">Es-tu prêt à entrer dans l’arène ? 🔥</h3>
+    <br>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register($event)">
+      <div class="modif">
+        <label class="form-label">🏷️ <strong>Nom</strong> (comme sur les fichiers officiels…)</label>
+        <input type="text" class="form-control input-text" placeholder="Votre nom" formControlName="nom">
+        <small class="text-danger" *ngIf="this.errNom">
+          Dis-moi qui tu es ! (Lettres uniquement) 🔠😉
+        </small>
+      </div>
+
+      <div class="modif">
+        <label class="form-label">📛 Prénom (comme on t’appelle dans le monde réel…)</label>
+        <input type="text" class="form-control input-text" placeholder="Votre prénom" formControlName="prenom">
+        <small class="text-danger" *ngIf="this.errPrenom">
+          On a tous un prénom, non ? (Sans chiffres ni symboles) 😏✨
+        </small>
+      </div>
+
+      <div class="modif ">
+        <label class="form-label">📩 Email (notre seul moyen de te contacter en cas de danger…)</label>
+        <input type="email" class="form-control input-text" placeholder="Votre email" formControlName="email">
+        <small class="text-danger" *ngIf="this.errEmail">
+          Un vrai mail avec &#64; et un ., sinon, c’est perdu dans l’espace ! 📬🛰️
+        </small>
+      </div>
+
+      <div class="modif">
+        <label class="form-label">🎂 Date de naissance (preuve que tu n’es pas une IA infiltrée…)</label>
+        <input type="date" class="form-control input-text" formControlName="dateNaissance">
+        <small class="text-danger" *ngIf="this.errDate">
+          Tu viens du futur ? Nope ! (JJ/MM/AAAA) 🚀📆
+        </small>
+      </div>
+
+      <div class="modif">
+        <label class="form-label">🔐 Mot de passe (protège tes secrets à tout prix !)</label>
+        <input type="password" class="form-control input-text" placeholder="********" formControlName="password">
+        <small class="text-danger" *ngIf="this.errMdp">
+          8+ caractères, 1 maj, 1 min, 1 chiffre, 1 spécial… facile, non ? 🔒🔥
+        </small>
+      </div>
+
+      <div class="modif">
+        <label class="form-label">🔄 Confirme-le (si tu doutes, tu es déjà en danger…)</label>
+        <input type="password" class="form-control input-text" placeholder="********" formControlName="confirmPassword">
+        <small class="text-danger" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+          Oups, les mots de passe ne correspondent pas ! Essaie encore. 🔄🔒
+        </small>
+        <small class="text-danger" *ngIf="this.errConfirmMpd" >
+          Confirme ton mot de passe, histoire qu’on soit sur la même longueur d’onde. 🔑👌
+        </small>
+      </div>
+
+      <div class="inscri-button">
+        <button class="btn btn-secondary w-100 color-butt" type="submit" >🔑 Activer mon profil</button>
+      </div>
+    </form>
+
+  </div>
+  </div>
+</div>
+
+</body>
+
+
+

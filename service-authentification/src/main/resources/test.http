@@ -1,0 +1,71 @@
+### Inscription
+POST http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "chouchou@gmail.com",
+  "nom": "missa",
+  "password": "OUmay31122014..@",
+  "prenom": "missa",
+  "pseudo": "missa"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization"))
+    client.global.set("location", response.headers.valueOf("Location"))
+%}
+
+### Inscription 2
+POST http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "bilaa@gmail.com",
+  "nom": "missa",
+  "password": "OUmay31122014..@",
+  "prenom": "missa"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")) %}
+
+### Connexion
+POST http://localhost:8080/escamiage/utilisateur/connexion
+Content-Type: application/json
+
+{
+  "email": "admin@admin.com",
+  "password": "Admin0101@"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")) %}
+
+
+### modifyMyProfile
+PUT  http://localhost:8080/escamiage/utilisateur/24
+#PUT {{location}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "dateNaissance": "2002-01-01",
+  "email": "miage@gmail.com",
+  "nom": "miage",
+  "prenom": "miage"
+}
+
+### getAllUsers
+GET http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+Authorization: {{token}}
+
+
+### getMyProfile
+GET http://localhost:8081/escamiage/utilisateur/%23(id)
+Content-Type: application/json
+Authorization: {{token}}
+
+### Supprimer un utilisateur
+DELETE {{location}}
+Authorization: {{token}}
+

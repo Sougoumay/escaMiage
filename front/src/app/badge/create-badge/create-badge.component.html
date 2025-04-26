@@ -1,0 +1,20 @@
+<!-- Bouton pour ouvrir la modale -->
+<button class="btn btn-primary" (click)="openModal()">Ouvrir la modale</button>
+
+<!-- La modale Bootstrap -->
+<div #myModal class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Titre de la modale</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <p>Contenu de la modale...</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

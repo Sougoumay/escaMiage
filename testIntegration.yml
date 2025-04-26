@@ -1,0 +1,17 @@
+stages:
+  - docker
+  - testI
+
+# Etape de build : construire les services Docker via Docker Compose
+build_services:
+  stage: docker
+  script:
+    - docker-compose up --build -d
+
+# Etape de test : exécuter les tests avec Maven dans l'image Maven
+run_gateway_tests:
+  stage: testI
+  image: maven:3.9.9-amazoncorretto-21-alpine
+  script:
+    - cd service-actualite
+    - mvn test

@@ -1,0 +1,46 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-authentification
+          uri: http://localhost:8081
+          predicates:
+            - Path=/escamiage/utilisateur/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+        - id: service-jeu
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/jeu/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+        - id: service-recompense
+          uri: http://localhost:8084
+          predicates:
+            - Path=/escamiage/recompense/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+        - id: service-actualite
+          uri: http://localhost:8083
+          predicates:
+            - Path=/escamiage/actualite/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+        - id: service-notification
+          uri: http://localhost:8085
+          predicates:
+            - Path=/escamiage/notification/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+      default-filters:
+        - PreserveHostHeader
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        enabled: true
+        register: true

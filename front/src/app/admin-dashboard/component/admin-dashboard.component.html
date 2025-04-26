@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Inclusion de Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <a routerLink="/profile" class="text-decoration-none" style="cursor: pointer;">
+    <i class="bi bi-person-circle" ></i>
+  </a>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>ESC + Miage</h2>
+  <!-- Autres éléments de menu -->
+  <a (click)="onMesEnigmesClicked()">Mes énigmes</a>
+  <a (click)="onMesUtilisateursClicked()">Mes utilisateurs</a>
+  <a (click)="onMesBadgesClicked()">Mes badges</a>
+  <a (click)="onMesPostClicked()">Mes Posts</a>
+</div>
+
+<div class="content">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Tableau de bord</h1>
+    <a routerLink="/profile" class="text-decoration-none">
+      <i class="bi bi-person-circle" style="font-size: 2rem; color: #3A57E8;"></i>
+    </a>
+  </div>
+
+  <button *ngIf="showMesEnigmes" (click)="createEnigme()" type="button" class="btn btn-secondary">Créer énigme</button>
+
+  <div *ngIf="showMesEnigmes" class="container mt-5">
+    <h2>Liste des énigmes</h2>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Question</th>
+        <th>Difficulté</th>
+        <th>Indice</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let enigme of enigmes">
+        <td>{{enigme.id}}</td>
+        <td>{{enigme.question}}</td>
+        <td>{{enigme.difficulte}}</td>
+        <td>{{enigme.indice}}</td>
+        <td>
+          <button class="btn btn-warning" (click)="modifierEnigme(enigme)">Modifier</button>
+          <button class="btn btn-danger" (click)="supprimerEnigme(enigme.id!)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="showMesUtilisateur" class="container mt-5">
+    <h2>Liste des utilisateurs</h2>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADGE -->
+
+  <!-- Bouton pour ouvrir la modale -->
+  <button *ngIf="showMesBadges" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createBadgeModal">
+    Créer badge
+  </button>
+
+<!-- Modale Bootstrap -->
+<div class="modal fade" id="createBadgeModal" tabindex="-1" aria-labelledby="createBadgeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createBadgeModalLabel">Créer un badge</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="badgeForm" (ngSubmit)="createBadge($event)">
+          <!-- Champ Nom -->
+          <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input id="nom" type="text" class="form-control" formControlName="nom">
+            <div *ngIf="submitted && this.error_nomBadge" class="text-danger">
+              Le nom est requis.
+            </div>
+          </div>
+
+          <!-- Téléchargement de l'icône -->
+          <div class="mb-3">
+            <label for="icone" class="form-label">Icône du badge</label>
+            <input id="icone" type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+            <!-- <div *ngIf="submitted && badgeForm.get('icone')?.invalid" class="text-danger">
+              Une icône est requise.
+            </div> -->
+          </div>
+
+          <!-- Type de condition -->
+          <div class="mb-3">
+            <label for="condition_type" class="form-label">Type de condition</label>
+            <select id="condition_type" class="form-control" formControlName="condition_type">
+              <option *ngFor="let type of typeBadgeOptions" [value]="type">{{ type }}</option>
+            </select>
+            <div *ngIf="submitted && this.error_conditionTypeBadge" class="text-danger">
+              Le type de condition est requis.
+            </div>
+          </div>
+
+          <!-- Valeur de la condition -->
+          <div class="mb-3">
+            <label *ngIf="isThemeSelected()" for="condition_value" class="form-label">Thème : </label>
+            <label *ngIf="!isThemeSelected()" for="condition_value" class="form-label">Condition et valeur :  </label>
+            <!-- Sélection du thème -->
+            <ng-container *ngIf="isThemeSelected(); else otherCondition">
+              <select id="condition_value" class="form-control" formControlName="condition_value">
+                <option *ngFor="let theme of themesOptions" [value]="theme">{{ theme }}</option>
+              </select>
+            </ng-container>
+            <div *ngIf="submitted && this.error_conditionValueBadge" class="text-danger">
+              Le thème est requis.
+            </div>
+
+
+            <!-- Si ce n'est pas un thème -->
+            <ng-template #otherCondition>
+              <div class="d-flex gap-2">
+                <select class="form-control" formControlName="comparison_sign">
+                  <option *ngFor="let sign of comparisonSigns" [value]="sign">{{ sign }}</option>
+                </select>
+                <input type="number" class="form-control" formControlName="numeric_value" placeholder="Valeur numérique">
+              </div>
+            </ng-template>
+
+            <div *ngIf="submitted && this.error_comparison_signBadge" class="text-danger">
+              Le quantificateur est requis.
+            </div>
+            <div *ngIf="submitted && this.error_numeric_valueBadge" class="text-danger">
+              Le nombre du quantificateur est requis.
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModalButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="createBadge($event)">Créer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div *ngIf="showMesBadges" class="container mt-5">
+    <h2>Liste des badges</h2>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Nom</th>
+        <!-- <th>ICONE</th> -->
+        <th>Type de condition</th>
+        <th>Valeur</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let badge of badges">
+        <td>{{ badge.nom }}</td>
+        <!-- <td>{{ badge.icone }}</td> -->
+
+        <!-- CONDITION TYPE AFFICHAGE -->
+        <td *ngIf="badge.condition_type == 'MEILLEUR_TEMPS'"> Meilleur temps 🏆⏱️</td>
+        <td *ngIf="badge.condition_type == 'TENTATIVES'"> Tentatives 🔄 </td>
+        <td *ngIf="badge.condition_type == 'THEME'"> Thème 🎨</td>
+        <td *ngIf="badge.condition_type == 'PIRE_TEMPS'">Pire temps 💥 </td>
+        <td *ngIf="badge.condition_type == 'TEMPS_MOYEN'"> Temps moyen ⏳</td>
+        <td>{{ badge.condition_value }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="supprimerBadge(badge.id!)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- MODALES -->
+  <!--
+
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   Launch demo modal
+ </button>
+
+
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         ...
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary">Save changes</button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+ <div class="container mt-5">
+   <button class="btn btn-primary" (click)="openModalCreateBadge()">Ouvrir la modale</button>
+
+
+   <div *ngIf="isModaCreateBadgeOpen" class="modal show" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" appClickOutside (clickOutside)="closeModalCreateBadge()">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Modale avec clic extérieur</h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalCreateBadge()"></button>
+         </div>
+         <div class="modal-body">
+           Voici le contenu de la modale. Cliquez à l'extérieur pour la fermer.
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" (click)="closeModalCreateBadge()">Fermer</button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div> -->
+
+  <button *ngIf="showMesPosts" (click)="createPost()" type="button" class="btn btn-secondary">Créer Post</button>
+
+  <div *ngIf="showMesPosts" class="container mt-5">
+    <h2>Liste des posts</h2>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Contenu</th>
+        <th>Image</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let post of posts">
+        <td>{{ post.idPost }}</td>
+        <td>{{ post.contenu }}</td>
+        <td>{{ post.imagePost }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="modifierPost(post)">Modifier</button>
+          <button class="btn btn-danger" (click)="supprimerPost(post.idPost!)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

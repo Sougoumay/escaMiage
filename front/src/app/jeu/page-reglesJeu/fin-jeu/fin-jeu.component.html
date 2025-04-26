@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔓 Escape Game - Règles</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div class="glitch-container">
+    <a href="/user-dashboard" class="back-arrow">⬅ Quitter</a>
+    <h1 class="glitch" *ngIf="debut">🏆 Félicitations… ou pas ?</h1>
+    <h1 class="glitch" *ngIf="isSuite1">🔓 Félicitations, tu as trouvé la sortie…</h1>
+    <h1 class="glitch" *ngIf="isSuite2">🏆 Ton score final 🏆</h1>
+    
+    
+    <div class="container" *ngIf="debut">
+        <p class="typed-text">
+          <span>💡 L’écran clignote une dernière fois… Tu as franchi toutes les étapes, déjoué les pièges</span>
+          <span>de l’algorithme et prouvé ta maîtrise des connaissances MIAGE.</span>
+          <span>Les dernières lignes de code défilent, le système semble s’éteindre... </span>
+          <span>Mais soudain, un message s'affiche.</span>
+        </p> 
+      </div>
+    
+    <div class="container" *ngIf="isSuite1">
+      <p class="typed-text">
+        <span>...Es-tu vraiment libre ?</span>
+        <span>Le jeu ne s’arrête jamais vraiment. Tu es peut-être sorti… mais l’algorithme, lui,</span>
+        <span> continue d’apprendre. ⏳ Ton aventure touche à sa fin… pour cette fois.</span>
+        <span>Prends un instant pour respirer, analyser, et surtout… ne baisse jamais ta garde.</span>
+        <span>Le MIAGE, comme l’escape game, est un défi permanent. Alors… prêt à recommencer ?</span>
+      </p> 
+    </div>
+
+    <div class="container" *ngIf="isSuite2">
+      <p class="typed-text">
+        <span>L'algorithme a analysé tes choix... Voici ton verdict.</span>
+        <span class = "large">Score final : 🏅 {{score }}</span><br>
+        <span class = "large">Temps restant : ⏳ {{tempsRestant }}</span><br>
+        <span class = "large">Tentatives erronées : ❌ {{tentativesErronees }} </span><br>
+      </p> 
+    </div>
+
+    
+    <a (click)="suite1()" *ngIf="debut" class="btn">Suivant</a>
+    <a (click)="suite2()" *ngIf="isSuite1" class="btn">Suivant</a>
+    <a (click)="suite3()" *ngIf="isSuite2" class="btn">Quitter</a>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const audio = new Audio("typewriter.mp3"); // Assure-toi que le fichier est bien dans ton projet
+    audio.play();
+});
+
+  </script>
+</body>
+</html>

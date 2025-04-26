@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page de Connexion</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Modifier le badge</h2>
+
+  <div *ngIf="isLoading">Chargement...</div>
+
+  <div *ngIf="!isLoading">
+    <form [formGroup]="updateForm" (ngSubmit)="updateBadge()">
+
+      <div class="mb-3">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-control" formControlName="nom">
+        <small class="text-danger" *ngIf="updateForm.get('nom')?.invalid && updateForm.get('nom')?.touched">
+          Le nom est obligatoire.
+        </small>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label">Icone</label>
+        <input type="text" class="form-control" formControlName="icone">
+        <small class="text-danger" *ngIf="updateForm.get('icone')?.invalid && updateForm.get('icone')?.touched">
+          L'icone est obligatoire.
+        </small>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label">Condition_type</label>
+        <select class="form-control" formControlName="condition_type">
+          <option *ngFor="let condition of condition_types" [value]="condition">{{ condition }}</option>
+        </select>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label">Condition_value</label>
+        <input type="text" class="form-control" formControlName="condition_value">
+        <small class="text-danger" *ngIf="updateForm.get('condition_value')?.invalid && updateForm.get('condition_value')?.touched">
+          La condition_value est obligatoire.
+        </small>
+      </div>
+
+
+      <!-- Message d'erreur -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+
+
+      <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid">
+        Enregistrer les modifications
+      </button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

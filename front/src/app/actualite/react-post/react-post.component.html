@@ -1,0 +1,24 @@
+<h2>Réagir sur les posts</h2>
+<div>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Contenu</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let post of posts">
+    <td>{{ post.idPost }}</td>
+    <td>{{ post.contenu }}</td>
+    <td>
+      <button (click)="react( post,'FIRE')">🔥 FIRE </button>
+      <button (click)="react(post,'HEART')">❤️ HEART </button>
+      <button (click)="react(post,'HAPPY')">😊 HAPPY</button>
+      <button (click)="react(post,'SAD')">😢 Sad </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

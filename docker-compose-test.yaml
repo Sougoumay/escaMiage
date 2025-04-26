@@ -1,0 +1,235 @@
+services:
+  discovery:
+    image: hashicorp/consul:latest
+    #command: agent -dev -client=0.0.0.0
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    restart: always
+
+  rabbitmqTest:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    hostname: rabbit-nimp
+    restart: always
+
+  gateway:
+    build : ./gateway
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery
+
+### Mise en place des microservices
+  service-authentification:
+    build : ./service-authentification
+    ports:
+      - "8081:8080"
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - DB_HOST=bdd-authentification
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE_TEST}
+      - RABBIT_HOST=rabbitmqTest
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - discovery
+      - bdd-authentification
+      - rabbitmqTest
+
+  service-jeu:
+    build: ./service-jeu
+    ports:
+      - "8082:8080"
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - DB_HOST=bdd-jeu
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE_TEST}
+      - RABBIT_HOST=rabbitmqTest
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - discovery
+      - bdd-jeu
+      - service-authentification
+      - rabbitmqTest
+
+  service-recompense:
+    build: ./service-recompense
+    ports:
+      - "8083:8080"
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - DB_HOST=bdd-recompense
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE_TEST}
+      - RABBIT_HOST=rabbitmqTest
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - discovery
+      - bdd-recompense
+      - service-authentification
+      - rabbitmqTest
+
+  service-actualite:
+    build: ./service-actualite
+    ports:
+      - "8084:8080"
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - DB_HOST=bdd-actualite
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE_TEST}
+      - RABBIT_HOST=rabbitmqTest
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - discovery
+      - bdd-actualite
+      - service-authentification
+      - rabbitmqTest
+  service-notification:
+    build:
+      context: ./service-notification
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - CONSUL_HOST=discovery
+      - CONSUL_PORT=8500
+      - RABBIT_HOST=rabbitmqTest
+      - DB_HOST=bdd-notification
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
+      - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
+      - SMTP_FROM_NAME=${SMTP_FROM_NAME}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_ENABLE_SSL=${SMTP_ENABLE_SSL}
+    depends_on:
+      bdd-notification:
+        condition: service_healthy
+      discovery:
+        condition: service_started
+      rabbitmqTest:
+        condition: service_started
+      service-authentification:
+        condition: service_started
+
+  bdd-authentification:
+    image: mysql
+    container_name: bdd-authentification
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+  bdd-jeu:
+    image: mysql
+    container_name: bdd-jeu
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+  bdd-recompense:
+    image: mysql
+    container_name: bdd-recompense
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3308:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+  bdd-actualite:
+    image: mysql
+    container_name: bdd-actualite
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3309:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+  bdd-notification:
+    image: mysql
+    container_name: bdd-notification
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3310:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+

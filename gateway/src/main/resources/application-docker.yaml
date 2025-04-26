@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-authentification
+          uri:  lb://service-authentification
+          predicates:
+            - Path=/escamiage/utilisateur/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+
+        - id: service-jeu
+          uri: lb://service-jeu
+          predicates:
+            - Path=/api/jeu/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+
+        - id: service-recompense
+          uri: lb://service-recompense
+          predicates:
+            - Path=/escamiage/recompense/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+
+        - id: service-actualite
+          uri: lb://service-actualite
+          predicates:
+            - Path=/escamiage/actualite/**
+          filters:
+            - RewritePath=/(?<segment>/?.*), /$\{segment}
+
+      default-filters:
+        - PreserveHostHeader
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        enabled: true
+        register: true

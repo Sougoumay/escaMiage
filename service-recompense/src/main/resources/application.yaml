@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: service-recompense
+  cloud:
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        register: true
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3309}/${DB_NAME:escamiage}?serverTimezone=UTC
+    username: ${DB_USER:myuser}
+    password: ${DB_PASSWORD:mypassword}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    jdbc:
+      dialect: mysql
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    password: guest
+    port: 5672
+    username: guest
+    exchange: escamiage.exchange
+    queue: utilisateur.ajout.queue.recompense,jeu.queue.recompense,utilisateur.suppression.queue.recompense,classement.queue.notification
+    routingkey: utilisateur.routingkey,partie.routingkey,badge.routingkey,classement.routingkey,suppression.routingkey
+server:
+  #port: 8085
+springdoc:
+  api-docs:
+    path: /escamiage/recompense/docs
+    enabled: true
+  swagger-ui:
+    path: /escamiage/recompense/swagger-ui.html
+    disable-swagger-default-url: true
+    operations-sorter: method
+    display-request-duration: true
+    enabled: true
+    urls:
+      - name: La documentation du service recompense d'escamiage
+        url: /escamiage/recompense/docs
+
+
+

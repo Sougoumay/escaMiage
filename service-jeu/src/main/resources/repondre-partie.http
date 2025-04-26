@@ -1,0 +1,33 @@
+### Inscription
+POST http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "missa@gmail.com",
+  "nom": "hattab",
+  "password": "OUmay31122014..@",
+  "prenom": "wassan"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")) %}
+
+### Connexion en tant que missa
+POST http://localhost:8081/escamiage/utilisateur/connexion
+Content-Type: application/json
+
+{
+  "email": "missa@gmail.com",
+  "password": "OUmay31122014..@"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")) %}
+
+### Repondre à la master question
+PUT http://localhost:8082/api/jeu/parties/2/master
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "answer" : "xvgsxvettwegqte"
+}

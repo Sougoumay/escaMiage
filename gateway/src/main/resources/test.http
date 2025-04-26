@@ -1,0 +1,58 @@
+### Inscription
+POST http://localhost:8080/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "atat@gmail.com",
+  "nom": "hattab",
+  "password": "OUmay31122014..@",
+  "prenom": "wassan"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization"))
+    client.global.set("location", response.headers.valueOf("Location"))
+%}
+
+### Se connecter
+POST http://localhost:8080/escamiage/utilisateur/connexion
+Content-Type: application/json
+
+{
+  "email": "zgerfyjuj@gmail.com",
+  "password": "OUmay31122014..@"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization"))
+%}
+
+### Creer un enigme
+POST http://localhost:8080/api/jeu/enigmes
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "question": "Une petite question de crypto",
+  "reponse": "ALGAMAL",
+  "difficulte": "MASTER1" ,
+  "indice" : "le nom de quelqu'un de connu"
+}
+
+### Creer un post
+POST http://localhost:8084/escamiage/actualite
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "contenu" : "Bientot la mise en place de niveau sur notre application",
+  "utilisateurDTO": {
+    "id": 1,
+    "email": "zgerfyjuj@gmail.com",
+    "pseudo": "missa"
+  }
+
+}
+
+### Creer une partie
+POST http://localhost:8080/api/jeu/parties
+Authorization: {{token}}

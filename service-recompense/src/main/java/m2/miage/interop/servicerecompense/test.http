@@ -1,0 +1,34 @@
+### Créer badge
+POST http://localhost:8085/escamiage/recompense/badge
+Content-Type: application/json
+
+{
+  "nom": "Flash MIAGFDFEEEE",
+  "icone": "iVBORw0KGgoAAAANSUhEUgAA",
+  "condition_type": "THEME",
+  "condition_value": "CRYPDFFFDFDFJVJHTOPOO"
+}
+
+
+### Classement global
+GET http://localhost:8085/escamiage/recompense/classement
+Content-Type: application/json
+
+### Get Badge by id
+GET http://localhost:8085/escamiage/recompense/badge/2
+Content-Type: application/json
+
+### delete badge by id
+DELETE http://localhost:8085/escamiage/recompense/badge/2
+Content-Type: application/json
+
+### modify badge by id
+PUT http://localhost:8085/escamiage/recompense/badge/1
+Content-Type: application/json
+
+{
+  "nom": "FLASHHHHHH",
+  "icone": "1234",
+  "condition_type": "PIRE_TEMPS",
+  "condition_value": "<57565"
+}

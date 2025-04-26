@@ -1,0 +1,30 @@
+stages:
+#  - deploy
+
+#deploy_services:
+#  stage: deploy
+#  image: docker:20.10.16
+#  services:
+#    - docker:20.10.16-dind
+#  before_script:
+#    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#    # Génération du fichier .env
+#    # Les variables d'environnement nécessaires pour le service notification
+#    - echo "SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}" >> .env
+#    - echo "SMTP_FROM_NAME=${SMTP_FROM_NAME}" >> .env
+#    - echo "SMTP_USERNAME=${SMTP_USERNAME}" >> .env
+#    - echo "SMTP_PASSWORD=${SMTP_PASSWORD}" >> .env
+#    - echo "SMTP_HOST=${SMTP_HOST}" >> .env
+#    - echo "SMTP_PORT=${SMTP_PORT}" >> .env
+#    - echo "SMTP_ENABLE_SSL=${SMTP_ENABLE_SSL}" >> .env
+#    # les variables nécessaires pour votre docker-compose
+#    - echo "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" >> .env
+#    - echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> .env
+#    - echo "MYSQL_USER=${MYSQL_USER}" >> .env
+#    - echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> .env
+#  script:
+#    - docker-compose up -d
+#  after_script: # supprimer le fichier .env après la construction de l'image pour des raisons de sécurité
+#    - rm -f .env
+#  only:
+#    - master

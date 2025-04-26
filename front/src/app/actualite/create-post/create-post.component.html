@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/admin-dashboard" class="back-arrow">⬅ Retour</a>
+<div class="container mt-4">
+  <h2>Créer un Post</h2>
+  <form [formGroup]="postForm" (ngSubmit)="createPost($event)">
+
+    <div class="mb-3">
+      <label for="contenu" class="form-label">Contenu</label>
+      <input id="contenu" type="text" class="form-control" formControlName="contenu">
+      <div *ngIf="postForm.get('contenu')?.touched && postForm.get('contenu')?.invalid" class="text-danger">
+        Le contenu est requis.
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn ">Créer le Post</button>
+  </form>
+</div>
+</body>
+</html>

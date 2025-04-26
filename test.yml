@@ -1,0 +1,61 @@
+stages:
+  - test
+
+# 🔹 Définition de l'image Maven avec Java 21
+image: maven:3.9.9-amazoncorretto-21-alpine
+
+# 🔹 Test du microservice Actualité
+test-service-actualite:
+  stage: test
+  script:
+    - echo "TEST ACTUALITE"
+    - cd service-actualite && mvn test
+  artifacts:
+    paths:
+      - service-actualite/target/*
+    expire_in: 1 day
+  only:
+    - branches
+  when: always
+
+# 🔹 Test du microservice Authentification
+test-service-authentification:
+  stage: test
+  script:
+    - echo "TEST AUTHENTIFICATION"
+    - cd service-authentification && mvn test
+  artifacts:
+    paths:
+      - service-authentification/target/*
+    expire_in: 1 day
+  only:
+    - branches
+  when: always
+
+# 🔹 Test du microservice Jeu
+test-service-jeu:
+  stage: test
+  script:
+    - echo "TEST JEU"
+    - cd service-jeu && mvn test
+  artifacts:
+    paths:
+      - service-jeu/target/*
+    expire_in: 1 day
+  only:
+    - branches
+  when: always
+
+# 🔹 Test du microservice Récompense
+test-service-recompense:
+  stage: test
+  script:
+    - echo "TEST RECOMPENSE"
+    - cd service-recompense && mvn test
+  artifacts:
+    paths:
+      - service-recompense/target/*
+    expire_in: 1 day
+  only:
+    - branches
+  when: always

@@ -1,0 +1,57 @@
+### La petite inscription des familles
+POST http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "afaf@gmail.com",
+  "nom": "elric",
+  "password": "OUmay31122014..@",
+  "prenom": "missa"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization"))
+%}
+
+### La petite connexion des familles
+### Connexion
+POST http://localhost:8081/escamiage/utilisateur/connexion
+Content-Type: application/json
+
+{
+  "email": "admin@admin.com",
+  "password": "admin"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")) %}
+
+### CREER UN POST
+# @no-cookie-jar
+POST http://localhost:8084/escamiage/actualite
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "contenu": "Bonjour à tous l'escaTeam prêt à relever le défi de Mars ? Restez branché le défi arrive trsè bientôttt"
+}
+
+> {% client.global.set("idPost", response.headers.valueOf("Location").split('/').pop()) %}
+
+
+
+### REAGIR à un post
+# @no-cookie-jar
+PUT http://localhost:8084/escamiage/actualite/{{idPost}}/reaction
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "typeReaction": "HAPPY"
+}
+
+### Récuperer tous les posts
+# @no-cookie-jar
+GET http://localhost:8084/escamiage/actualite
+Content-Type: application/json
+Authorization: {{token}}
+

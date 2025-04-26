@@ -1,0 +1,63 @@
+POST http://localhost:8080/api/jeu/parties
+
+### Annuler partie
+PUT http://localhost:8080/api/jeu/parties/2
+
+
+### Repondre à un enigme
+PUT http://localhost:8080/api/jeu/parties/1/enigmes/15
+Content-Type: application/json
+
+{
+  "answer":"La distribution normale, qui modélise de nombreux phénomènes naturels"
+}
+
+
+### Consulter un enigme
+GET http://localhost:8080/api/jeu/parties/1/enigmes/15
+
+
+
+### Consulter l'indice d'un enigme
+GET http://localhost:8080/api/jeu/parties/1/enigmes/15/indice
+
+### Repondre à la question master
+PUT http://localhost:8080/api/jeu/parties/1/enigmes/15/master
+Content-Type: application/json
+
+{
+  "answer": "Code"
+}
+
+### Inscription
+POST http://localhost:8081/escamiage/utilisateur
+Content-Type: application/json
+
+{
+  "dateNaissance": "2001-01-01",
+  "email": "mouad@gmail.com",
+  "nom": "hattab",
+  "password": "OUmay31122014..@",
+  "prenom": "wassan"
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization"))
+    client.global.set("location", response.headers.valueOf("Location"))
+%}
+
+### Démarrer partie
+POST http://localhost:8082/api/jeu/parties
+Content-Type: application/json
+Authorization: {{token}}
+
+> {%  client.global.set("urlpartie", response.headers.valueOf("Location"))
+%}
+
+### Fin partie
+PUT {{urlpartie}}/fin
+Content-Type: application/json
+Authorization: {{token}}
+
+
+
+

@@ -1,0 +1,224 @@
+
+
+<!--&lt;!&ndash; Conteneur du logo et bouton de déconnexion &ndash;&gt;-->
+<!--<div class="top-right-container">-->
+<!--  <img src="ton-logo.png" alt="Logo" class="logo">-->
+<!--  <button class="btn logout-btn" (click)="logout()">Déconnexion</button>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Conteneur principal avec l'image de fond &ndash;&gt;-->
+<!--<div class="game-container">-->
+<!--  <div class="overlay">-->
+<!--    <h1>Bienvenue dans l'Escape Game</h1>-->
+<!--    <button class="btn play-btn" (click)="goToJeu()">Jouer</button>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Conteneur des derniers posts &ndash;&gt;-->
+<!--<div class="latest-posts">-->
+<!--  <h2>Derniers Posts</h2>-->
+<!--  <ul>-->
+<!--    <li *ngFor="let post of latestPosts">{{ post.contenu }}</li>-->
+<!--  </ul>-->
+<!--  <button class="btn" (click)="openAllPostsModal()">Voir tous les posts</button>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal pour afficher tous les posts &ndash;&gt;-->
+<!--<div id="allPostsModal" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close" (click)="closeAllPostsModal()">&times;</span>-->
+<!--    <h2>Tous les Posts</h2>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let post of allPosts">{{ post.idPost }} - {{ post.contenu }}</li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Sidebar mise à jour avec "Top 3" cliquable &ndash;&gt;-->
+<!--<div class="sidebar">-->
+<!--  <button class="btn" (click)="goToJeu()">Jouer au jeu</button>-->
+<!--  <button class="btn" (click)="goToFeedbackSuggestions()">Feedback-Suggestions</button>-->
+<!--  <button class="btn" (click)="openTop3Modal()">Top 3</button>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal pour afficher le classement complet &ndash;&gt;-->
+<!--<div id="top3Modal" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close" (click)="closeTop3Modal()">&times;</span>-->
+<!--    <h2>Classement Complet</h2>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let joueur of classement">{{ joueur.id }} - {{ joueur.meilleurScore }} pts</li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="fr">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Dashboard</title>-->
+<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--  &lt;!&ndash; Inclusion de Bootstrap Icons &ndash;&gt;-->
+<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">-->
+
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Barre de navigation avec profil et bouton de déconnexion &ndash;&gt;-->
+<!--<header class="header">-->
+
+<!--  <div class="profile-container">-->
+<!--    <button class="btn logout-btn">Déconnexion</button>-->
+<!--  </div>-->
+<!--  <div class="d-flex justify-content-between align-items-center mb-3">-->
+<!--    <a href="/profile">-->
+<!--      <i class="bi bi-person-circle" style="font-size: 2rem; color: #3A57E8;"></i>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--</header>-->
+
+<!--<div class="container">-->
+<!--  &lt;!&ndash; Contenu principal (jeu + posts) à gauche &ndash;&gt;-->
+<!--  <main class="main-content">-->
+<!--    &lt;!&ndash; Card du jeu &ndash;&gt;-->
+<!--    <div class="card game-card">-->
+<!--      <h1>Bienvenue dans l'Escape Game</h1>-->
+<!--      <button class="btn play-btn" (click)="goToJeu()">Jouer</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Card des derniers posts &ndash;&gt;-->
+<!--    <div class="card posts-card">-->
+<!--      <h2>Derniers Posts</h2>-->
+<!--      <ul>-->
+<!--        <li *ngFor="let post of latestPosts">{{ post.contenu }}</li>-->
+<!--      </ul>-->
+<!--      <button class="btn" (click)="openAllPostsModal()">Voir tous les posts</button>-->
+<!--    </div>-->
+<!--  </main>-->
+
+<!--  &lt;!&ndash; Sidebar (Top 3 joueurs) à droite maintenant &ndash;&gt;-->
+<!--  <aside class="sidebar">-->
+<!--    <div class="card sidebar-card">-->
+<!--      <h2>Top 3 Joueurs</h2>-->
+<!--      <ul>-->
+<!--        <li *ngFor="let joueur of classement">-->
+<!--          {{ joueur.id }} - {{ joueur.meilleurScore }} pts-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </aside>-->
+<!--</div>-->
+
+<!--<a (click)="goToFeedbackSuggestions()" title="problème ou question" class="contact-logo">-->
+<!--  <i class="bi bi-question-circle"></i>-->
+<!--</a>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+<!-- Barre de navigation -->
+<header class="header d-flex justify-content-between p-3">
+  <div>
+    <a href="/profile">
+      <i class="bi bi-person-circle" style="font-size: 2rem; color: #3A57E8;"></i>
+    </a>
+  </div>
+  <div>
+    <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+  </div>
+</header>
+
+<div class="container mt-4">
+  <main class="main-content">
+    <!-- Card du jeu -->
+    <div class="card game-card text-center p-4">
+      <h1>Bienvenue dans l'Escape Game</h1>
+      <button (click)="goToJeu()" class="btn play-btn mt-3">Jouer</button>
+    </div>
+
+    <!-- Card des derniers posts -->
+    <div class="card posts-card p-3 mt-3">
+      <h2 class="text-center">Derniers Posts</h2>
+      <ul>
+        <li *ngFor="let post of latestPosts">{{ post.contenu }}</li>
+      </ul>
+      <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#allPostsModal">
+        Voir tous les posts
+      </button>
+    </div>
+  </main>
+
+  <!-- Sidebar (Top 3 joueurs) -->
+  <aside class="sidebar">
+    <div class="card sidebar-card p-3 text-center">
+      <h2>Top 3 Joueurs</h2>
+            <ul>
+              <li *ngFor="let joueur of top3JoueursGlobal">
+                {{ joueur.id }} - {{ joueur.meilleurScore }} pts
+              </li>
+            </ul>
+      <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#allPlayersModal">
+        Voir le classement complet
+      </button>
+    </div>
+  </aside>
+</div>
+
+<!-- Icône contact en bas à droite -->
+<a (click)="goToFeedbackSuggestions()"  title="Problème ou question ?" class="contact-logo">
+  <i class="bi bi-question-circle"></i>
+</a>
+
+<!-- Modal pour afficher tous les posts -->
+<div class="modal fade" id="allPostsModal" tabindex="-1" aria-labelledby="postsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tous les Posts</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li *ngFor="let post of actualites">
+            {{ post.idPost }} - {{ post.contenu }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour afficher tout le classement -->
+<div class="modal fade" id="allPlayersModal" tabindex="-1" aria-labelledby="playersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Classement Complet</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li *ngFor="let joueur of classement">
+            {{ joueur.id }} - {{ joueur.meilleurScore }} pts
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

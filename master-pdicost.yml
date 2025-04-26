@@ -1,0 +1,15 @@
+stages:
+  - sync
+
+sync_to_bitbucket:
+  stage: sync
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+    - git remote add bitbucket https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@pdicost.univ-orleans.fr/git/scm/pinterop/interop-projet-1.git || true
+    - git fetch --all
+  script:
+    - git checkout master || git checkout -b master origin/master
+    - git push -f bitbucket master
+  only:
+    - master

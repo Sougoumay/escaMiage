@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔓 Escape Game - Règles</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div class="glitch-container">
+    <a href="/user-dashboard" class="back-arrow">⬅ Retour</a>
+    <h1 class="glitch">🕶️ Bienvenue dans EscaMIAGE</h1>
+    
+    <div class="container" *ngIf="debut">
+      <p class="typed-text">
+        <span>🧠 Boichut et Moal, professeurs d'informatique en MIAGE, étaient reconnus pour leur</span>
+        <span> génie. Des années de recherches, de projets ambitieux et d'innovations les ont menés</span>
+        <span>à une découverte inédite : un algorithme capable d'optimiser les décisions humaines,</span>
+        <span> en simulant et analysant chaque choix en temps réel. Une révolution en théorie,</span>
+        <span>mais qui a tout changé… en pratique.</span>
+      </p> 
+    </div>
+    
+    <div class="container" *ngIf="isSuite1">
+      <p class="typed-text">
+        <span>😈 Mais lorsque l’algorithme fut activé, un phénomène étrange se produisit. Leurs </span>
+        <span>comportements devinrent de plus en plus erratiques. Des réflexions incohérentes,</span>
+        <span>des décisions absurdes, et puis… ils disparurent. Plus de trace d'eux.</span>
+        <span>Seulement ce laboratoire vide et cet algorithme toujours en fonctionnement.</span>
+        <span>💾 Aujourd'hui, tu te retrouves dans leur bureau...</span>
+      </p> 
+    </div>
+
+    <div class="container" *ngIf="isSuite2">
+      <p class="typed-text">
+        <span>L’algorithme est toujours là, mais ce n'est pas juste un programme informatique.</span>
+        <span>C’est un jeu, un défi intellectuel qui te pousse à utiliser toute ta logique et </span>
+        <span>tes connaissances en informatique. Chaque énigme résolue est un pas de plus vers</span>
+        <span> la sortie. Mais attention, tout n’est pas aussi simple qu’il y paraît...</span>
+      </p> 
+    </div>
+
+    <div class="container" *ngIf="isSuite3">
+      <p class="typed-text">
+        <span>⏳ Le temps est limité. Pour t’échapper, tu devras dénicher des zones cachées,</span>
+        <span>qui t'ouvriront les portes d'énigmes mystérieuses, liées au programme de la MIAGE.</span>
+        <span>Des bases de données aux architectures logicielles, en passant par la gestion</span>
+        <span>de projet agile, chaque question est un test de ta maîtrise des fondamentaux de</span>
+        <span>l’informatique et des sciences de gestion.</span>
+      </p> 
+    </div>
+
+    <div class="container" *ngIf="isSuite4">
+      <p class="typed-text">
+        <span>🧩 Chaque clic, chaque réponse te rapproche de la vérité… ou du piège. </span>
+        <span>Réfléchis rapidement, agis intelligemment. L'algorithme est plus qu’un simple code,</span>
+        <span>c’est une intelligence qui cherche à te tester, te confronter à tes limites.</span>
+        <span>Résous les énigmes, découvre les zones cachées, et échappe-toi avant qu'il ne soit trop tard…</span>
+        <span>ou reste piégé à jamais dans un monde où la logique se mêle à l’imprévisible.</span>
+      </p> 
+    </div>
+
+    <div class="container" *ngIf="isSuite5">
+      <p class="typed-text">
+        <span>⏳ Tu as 30 minutes pour résoudre les défis. Chaque erreur te coûtera du temps.</span>
+        <span>Tu devras répondre par écrit sans utiliser d'articles. Sois précis dans tes réponses.</span>
+        <span>Les zones cliquables te guideront vers des énigmes liées au programme MIAGE.</span>
+        <span>Les réponses incorrectes te feront perdre des secondes précieuses et des points.</span>
+        <span>À chaque bonne réponse, tu te rapproches de la sortie, mais le temps s'écoule vite.</span>
+        <span>🔍 Avant de plonger dans l'inconnu, assure-toi d’être en pleine immersion.    ,</span>
+        <span>Le mode plein écran s'active… le jeu ne fait que commencer.      ,</span>
+      </p>
+    </div>
+    
+
+    <a (click)="suite1()" *ngIf="debut" class="btn">Suivant</a>
+    <a (click)="suite2()" *ngIf="isSuite1" class="btn">Suivant</a>
+    <a (click)="suite3()" *ngIf="isSuite2" class="btn">Suivant</a>
+    <a (click)="suite4()" *ngIf="isSuite3" class="btn">Suivant</a>
+    <a (click)="suite5()" *ngIf="isSuite4" class="btn">Suivant</a>
+    <a (click)="changementPage()" class="btn" *ngIf="isSuite5">🎲 Commencer le jeu</a>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const audio = new Audio("typewriter.mp3"); // Assure-toi que le fichier est bien dans ton projet
+    audio.play();
+});
+
+  </script>
+</body>
+</html>
