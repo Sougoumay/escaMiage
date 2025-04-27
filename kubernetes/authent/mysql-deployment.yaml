@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-auth-deployment
+  labels:
+    app: mysql-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-auth # fait réference au pod avec le label mysql-auth
+  template:
+    metadata:
+      labels:
+        app: mysql-auth # label des pods créés, qui sera aussi utilisé par les services pour pouvoir les exposer
+    spec:
+      containers:
+        - name: mysql-auth-container
+          image: mysql:8.0.0
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - configMapRef:
+                name: mysql-auth-cm
+            - secretRef:
+                name: mysql-auth-secret
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-auth-data
+      volumes:
+        - name: mysql-auth-data
+          persistentVolumeClaim:
+            claimName: mysql-auth-pvc

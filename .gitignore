@@ -16,3 +16,5 @@ service-notification/*.sourcelink.json
 *.user
 *.vs/
 
+# Les secrets de kube
+kubernetes/*/mysql-secret.yaml
