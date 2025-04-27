@@ -1,0 +1,13 @@
+name: actuality
+
+mysql:
+  database: escamiage
+  user: actuality-user
+  password: actuality-password
+  rootPassword: actuality-super-secret
+
+volume:
+  storage: 1Gi
+  hostPath: /mnt/data/mysql
+
+

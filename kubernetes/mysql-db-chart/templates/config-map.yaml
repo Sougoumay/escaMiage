@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-{{.Values.name}}-cm
+data:
+  MYSQL_DATABASE : "{{.Values.mysql.database}}"
+  MYSQL_USER : "{{.Values.mysql.user}}"
