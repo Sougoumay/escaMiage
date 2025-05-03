@@ -1,0 +1,12 @@
+discovery:
+  image: hashicorp/consul:latest
+  replicas: 1
+  name: consul
+  interface: eth0
+
+rabbitmq:
+  image: rabbitmq:3-management
+  replicas: 1
+  name: rabbitmq
+  username: guest
+  password: guest

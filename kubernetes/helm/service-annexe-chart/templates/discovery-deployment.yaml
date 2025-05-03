@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.discovery.name}}-deployment
+  labels:
+    app: {{.Values.discovery.name}}
+spec:
+  replicas: {{.Values.discovery.replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.discovery.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.discovery.name}}
+    spec:
+      containers:
+        - name: {{.Values.discovery.name}}
+          image: {{.Values.discovery.image}}
+          ports:
+            - containerPort: 8500
+            - containerPort: 8600
+              protocol: UDP
+          env:
+            - name: CONSUL_BIND_INTERFACE
+              value: {{.Values.discovery.interface}}
