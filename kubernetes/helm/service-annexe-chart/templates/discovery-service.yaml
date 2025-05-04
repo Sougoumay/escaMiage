@@ -4,9 +4,11 @@ metadata:
   name: {{.Values.discovery.name}}-svc
 spec:
   ports:
-    - port: 8600
+    - name: amqp
+      port: 8600
       targetPort: 8600
-    - port: 8500
+    - name: management
+      port: 8500
       targetPort: 8500
   selector:
     app: {{.Values.discovery.name}}

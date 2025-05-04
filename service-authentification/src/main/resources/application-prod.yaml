@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: service-authentification
+  cloud:
+    consul:
+      host: ${CONSUL_HOST}
+      port: ${CONSUL_PORT}
+      discovery:
+        register: true
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    jdbc:
+      dialect: mysql
+  sql:
+    init:
+      mode: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    password: guest
+    port: 5672
+    username: guest
+    queue: utilisateur.queue.notification,reset.password.queue.notification
+    exchange: escamiage.exchange
+    routingkey: utilisateur.routingkey,suppression.routingkey,reset.password.routingkey
+server:
+  #port: 8081
+springdoc:
+  api-docs:
+    path: /escamiage/utilisateur/docs
+    enabled: true
+  swagger-ui:
+    path: /escamiage/utilisateur/swagger-ui.html
+    disable-swagger-default-url: true
+    operations-sorter: method
+    display-request-duration: true
+    enabled: true
+    urls:
+      - name: La documentation du service d'authentification d'escamiage
+        url: /escamiage/utilisateur/docs

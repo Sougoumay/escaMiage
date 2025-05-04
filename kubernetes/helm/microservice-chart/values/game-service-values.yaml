@@ -1,0 +1,29 @@
+name: game
+replicas: 1
+image:
+  repository: service-game
+  tag: "0.0.3"
+  pullPolicy: ifNotPresent
+
+database:
+  enabled: true
+
+containerPort: 8080
+
+customEnv:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+smtp:
+  secret:
+    exist: false
+  config:
+    exist: false

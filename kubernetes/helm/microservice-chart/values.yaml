@@ -1,0 +1,36 @@
+name: microservice
+replicas: 1
+image:
+  repository: microservice
+  tag: latest
+  pullPolicy: ifNotPresent
+
+discovery:
+  name: consul
+  port: 8500
+
+rabbitmq:
+  name: rabbitmq
+
+mysql:
+  port: 3306
+  name: "escamiage"
+
+service:
+  type: ClusterIP
+  port: 80
+
+database:
+  enabled: false
+
+containerPort: 8080
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+
+customEnv: []
