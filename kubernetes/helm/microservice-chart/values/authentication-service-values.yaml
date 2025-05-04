@@ -1,0 +1,30 @@
+name: auth
+replicas: 1
+image:
+  repository: service-authentication
+  tag: latest
+  pullPolicy: ifNotPresent
+
+mysql:
+  password: auth-password
+  rootPassword: auth-super-secret
+  user: auth-user
+
+database:
+  enabled: true
+
+smtp:
+  secret:
+    exist: false
+  config:
+    exist: false
+
+containerPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

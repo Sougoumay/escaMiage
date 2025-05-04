@@ -1,0 +1,13 @@
+name: notification
+
+mysql:
+  database: escamiage
+  user: notification-user
+  password: notification-password
+  rootPassword: notification-supers-secret
+
+volume:
+  storage: 1Gi
+  hostPath: /mnt/data/mysql
+
+

@@ -1,0 +1,30 @@
+name: notification
+replicas: 1
+image:
+  repository: service-notification
+  tag: latest
+  pullPolicy: ifNotPresent
+
+mysql:
+  password: notification-password
+  rootPassword: notification-super-secret
+  user: notification-user
+
+database:
+  enabled: true
+
+containerPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+smtp:
+  secret:
+    exist: true
+  config:
+    exist: true

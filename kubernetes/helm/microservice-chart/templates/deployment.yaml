@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}-deployment
+  labels:
+    app: {{.Values.name}}
+spec:
+  replicas: {{.Values.replicas | default 1}}
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+    spec:
+      containers:
+        - name: {{.Values.name}}-container
+          image: {{.Values.image.repository}}:{{.Values.image.tag}}
+          ports:
+            - containerPort: {{.Values.containerPort | default 8080}}
+          env:
+            - name: CONSUL_HOST
+              value: {{.Values.discovery.name}}-svc
+            - name: CONSUL_PORT
+              value: "{{.Values.discovery.port}}"
+            - name: RABBIT_HOST
+              value: {{.Values.rabbitmq.name}}-svc
+            {{ if .Values.database.enabled}}
+            - name: DB_HOST
+              value: mysql-{{.Values.name}}-svc
+            - name: DB_PORT
+              value: "{{.Values.mysql.port}}"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-{{.Values.name}}-secret
+                  key: MYSQL_PASSWORD
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name : mysql-{{.Values.name}}-cm
+                  key: MYSQL_USER
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-{{ .Values.name }}-cm
+                  key: MYSQL_DATABASE
+            {{ end }}
+            {{- if .Values.customEnv }}
+            {{- range .Values.customEnv }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- end }}
+          envFrom:
+            {{ if .Values.smtp.config.exist}}
+            - configMapRef:
+                name: smtp-cm
+            {{end}}
+            {{ if .Values.smtp.config.exist}}
+            - secretRef:
+                name: smtp-secret
+            {{end}}

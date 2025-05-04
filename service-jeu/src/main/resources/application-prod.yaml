@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: service-jeu
+  cloud:
+    consul:
+      host: ${CONSUL_HOST}
+      port: ${CONSUL_PORT}
+      discovery:
+        register: true
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    jdbc:
+      dialect: mysql
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    password: guest
+    port: 5672
+    username: guest
+    exchange: escamiage.exchange
+    queue: utilisateur.suppression.queue.jeu,feedback.queue.notification
+    routingkey: partie.routingkey,suppression.routingkey,feedback.routingkey
+server:
+  #port: 8090
+springdoc:
+  api-docs:
+    path: /api/jeu/docs
+    enabled: true
+  swagger-ui:
+    path: /api/jeu/swagger-ui.html
+    disable-swagger-default-url: true
+    operations-sorter: method
+    display-request-duration: true
+    enabled: true
+    urls:
+      - name: La documentation du service jeu d'escamiage
+        url: /api/jeu/docs

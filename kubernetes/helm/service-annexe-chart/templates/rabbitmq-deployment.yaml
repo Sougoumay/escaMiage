@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.rabbitmq.name}}-deployment
+  labels:
+    app: {{.Values.rabbitmq.name}}
+spec:
+  replicas: {{.Values.rabbitmq.replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.rabbitmq.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.rabbitmq.name}}
+    spec:
+      containers:
+        - name: {{.Values.rabbitmq.name}}
+          image: {{.Values.rabbitmq.image}}
+          ports:
+            - name: management
+              containerPort: 15672
+            - name: amqp
+              containerPort: 5672
+          env:
+            - name: CONSUL_BIND_INTERFACE
+              value: eth0
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                secretKeyRef:
+                  key: RABBITMQ_USER
+                  name: {{.Values.rabbitmq.name}}-secret
+            - name: RABBITMQ_DEFAULT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.rabbitmq.name}}-secret
+                  key: RABBITMQ_PASSWORD

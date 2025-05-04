@@ -1,0 +1,13 @@
+name: game
+
+mysql:
+  database: escamiage
+  user: game-user
+  password: game-password
+  rootPassword: game-supers-secret
+
+volume:
+  storage: 1Gi
+  hostPath: /mnt/data/mysql
+
+

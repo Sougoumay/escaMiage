@@ -1,0 +1,13 @@
+name: recompense
+
+mysql:
+  database: escamiage
+  user: recompense-user
+  password: recompense-password
+  rootPassword: recompense-supers-secret
+
+volume:
+  storage: 1Gi
+  hostPath: /mnt/data/mysql
+
+

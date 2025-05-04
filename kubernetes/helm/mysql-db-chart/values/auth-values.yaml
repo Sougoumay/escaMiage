@@ -1,0 +1,13 @@
+name: auth
+
+mysql:
+  database: escamiage
+  user: auth-user
+  password: auth-password
+  rootPassword: auth-supers-secret
+
+volume:
+  storage: 1Gi
+  hostPath: /mnt/data/mysql
+
+

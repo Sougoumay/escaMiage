@@ -1,0 +1,30 @@
+name: actuality
+replicas: 1
+image:
+  repository: service-actuality
+  tag: latest
+  pullPolicy: ifNotPresent
+
+mysql:
+  password: actuality-password
+  rootPassword: actuality-super-secret
+  user: actuality-user
+
+database:
+  enabled: true
+
+containerPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+smtp:
+  secret:
+    exist: false
+  config:
+    exist: false

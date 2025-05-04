@@ -1,0 +1,6 @@
+apiVersion: v2
+name: discovery-rabbitmq-chart
+description: Chart Helm pour le depoloiement de Consul et RabbitMq
+type: application
+version: 0.1.0
+appVersion: "1.0"

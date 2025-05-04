@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mysql-db-chart
+description: Une charte Helm pour la configuration des bases de données
+type: application
+version: 0.2.0
+appVersion: "8.0.0"

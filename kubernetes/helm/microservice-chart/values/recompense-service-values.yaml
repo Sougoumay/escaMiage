@@ -1,0 +1,31 @@
+name: recompense
+replicas: 1
+
+image:
+  repository: service-recompense
+  tag: latest
+  pullPolicy: ifNotPresent
+
+mysql:
+  password: recompense-password
+  rootPassword: recompense-super-secret
+  user: recompense-user
+
+database:
+  enabled: true
+
+smtp:
+  secret:
+    exist: false
+  config:
+    exist: false
+
+containerPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

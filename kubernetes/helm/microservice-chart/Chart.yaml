@@ -1,0 +1,6 @@
+apiVersion: v2
+name: microservice-chart
+description: Une charte Helm pour la configuration des microservices
+type: application
+version: 0.0.1
+appVersion: "latest"

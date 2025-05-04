@@ -1,0 +1,33 @@
+name: gateway
+replicas: 1
+image:
+  repository: gateway
+  tag: "0.0.1"
+  pullPolicy: ifNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+database:
+  enabled: false
+
+smtp:
+  secret:
+    exist: false
+  config:
+    exist: false
+
+containerPort: 8080
+
+customEnv:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
