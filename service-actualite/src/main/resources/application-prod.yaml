@@ -1,6 +1,6 @@
 spring:
   application:
-    name: service-authentification
+    name: service-actualite
   cloud:
     consul:
       host: ${CONSUL_HOST}
@@ -27,23 +27,24 @@ spring:
     defer-datasource-initialization: true
   rabbitmq:
     host: ${RABBIT_HOST}
-    password: guest
+    password: ${RABBIT_PASSWORD}
     port: 5672
-    username: guest
-    queue: utilisateur.queue.notification,reset.password.queue.notification
+    username: ${RABBIT_USERNAME}
     exchange: escamiage.exchange
-    routingkey: utilisateur.routingkey,suppression.routingkey,reset.password.routingkey
-
+    queue: utilisateur.ajout.queue.actualite,badge.queue.actualite,classement.queue.actualite,utilisateur.suppression.queue.actualite
+    routingkey: utilisateur.routingkey,badge.routingkey,classement.routingkey,suppression.routingkey
 springdoc:
   api-docs:
-    path: /escamiage/utilisateur/docs
+    path: /escamiage/actualite/docs
     enabled: true
   swagger-ui:
-    path: /escamiage/utilisateur/swagger-ui.html
+    path: /escamiage/actualite/swagger-ui.html
     disable-swagger-default-url: true
     operations-sorter: method
     display-request-duration: true
     enabled: true
     urls:
-      - name: La documentation du service d'authentification d'escamiage
-        url: /escamiage/utilisateur/docs
+      - name: La documentation du service actualité d'escamiage
+        url: /escamiage/actualite/docs
+
+

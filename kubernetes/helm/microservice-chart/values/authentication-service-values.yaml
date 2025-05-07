@@ -1,13 +1,13 @@
 name: auth
 replicas: 1
 image:
-  repository: service-authentication
-  tag: latest
+  repository: service-auth
+  tag: "0.0.2"
   pullPolicy: ifNotPresent
 
 mysql:
   password: auth-password
-  rootPassword: auth-super-secret
+  rootPassword: auth-supers-secret
   user: auth-user
 
 database:
@@ -20,6 +20,14 @@ smtp:
     exist: false
 
 containerPort: 8080
+
+customEnv:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
+
+rabbitmq:
+  enabled: true
+
 
 resources:
   limits:

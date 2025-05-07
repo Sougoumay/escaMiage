@@ -20,6 +20,9 @@ smtp:
 
 containerPort: 8080
 
+rabbitmq:
+  enabled: false
+
 customEnv:
   - name: SPRING_PROFILES_ACTIVE
     value: prod

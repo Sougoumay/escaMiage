@@ -28,3 +28,6 @@ smtp:
     exist: true
   config:
     exist: true
+
+rabbitmq:
+  enabled: true

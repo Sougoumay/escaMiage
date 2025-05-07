@@ -8,6 +8,9 @@ image:
 database:
   enabled: true
 
+rabbitmq:
+  enabled: true
+
 containerPort: 8080
 
 customEnv:

@@ -11,6 +11,7 @@ discovery:
 
 rabbitmq:
   name: rabbitmq
+  enabled: false
 
 mysql:
   port: 3306

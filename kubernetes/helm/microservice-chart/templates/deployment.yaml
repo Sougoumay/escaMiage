@@ -24,8 +24,20 @@ spec:
               value: {{.Values.discovery.name}}-svc
             - name: CONSUL_PORT
               value: "{{.Values.discovery.port}}"
+            {{if .Values.rabbitmq.enabled}}
             - name: RABBIT_HOST
               value: {{.Values.rabbitmq.name}}-svc
+            - name: RABBIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.rabbitmq.name}}-secret
+                  key: RABBITMQ_USER
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.rabbitmq.name}}-secret
+                  key: RABBITMQ_PASSWORD
+            {{end}}
             {{ if .Values.database.enabled}}
             - name: DB_HOST
               value: mysql-{{.Values.name}}-svc

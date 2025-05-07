@@ -2,13 +2,12 @@ name: actuality
 replicas: 1
 image:
   repository: service-actuality
-  tag: latest
+  tag: "0.0.5"
   pullPolicy: ifNotPresent
 
-mysql:
-  password: actuality-password
-  rootPassword: actuality-super-secret
-  user: actuality-user
+customEnv:
+  - name: SPRING_PROFILES_ACTIVE
+    value: prod
 
 database:
   enabled: true
@@ -28,3 +27,6 @@ smtp:
     exist: false
   config:
     exist: false
+
+rabbitmq:
+  enabled: true
