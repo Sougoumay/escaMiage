@@ -3,13 +3,8 @@ replicas: 1
 
 image:
   repository: service-recompense
-  tag: latest
+  tag: "0.0.2"
   pullPolicy: ifNotPresent
-
-mysql:
-  password: recompense-password
-  rootPassword: recompense-super-secret
-  user: recompense-user
 
 database:
   enabled: true

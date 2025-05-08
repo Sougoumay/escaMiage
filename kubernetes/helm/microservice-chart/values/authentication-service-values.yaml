@@ -2,13 +2,8 @@ name: auth
 replicas: 1
 image:
   repository: service-auth
-  tag: "0.0.2"
+  tag: "0.0.4"
   pullPolicy: ifNotPresent
-
-mysql:
-  password: auth-password
-  rootPassword: auth-supers-secret
-  user: auth-user
 
 database:
   enabled: true

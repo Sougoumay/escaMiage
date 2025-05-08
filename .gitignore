@@ -19,3 +19,6 @@ service-notification/*.sourcelink.json
 # Les secrets de kube
 kubernetes/*/mysql-secret.yaml
 kubernetes/*/secret.yaml
+
+# Ignorer les fichiers .tar
+*.tar

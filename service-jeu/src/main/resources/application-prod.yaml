@@ -24,17 +24,15 @@ spring:
     defer-datasource-initialization: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
   rabbitmq:
     host: ${RABBIT_HOST}
-    password: guest
+    password: ${RABBIT_PASSWORD}
     port: 5672
-    username: guest
+    username: ${RABBIT_USERNAME}
     exchange: escamiage.exchange
     queue: utilisateur.suppression.queue.jeu,feedback.queue.notification
     routingkey: partie.routingkey,suppression.routingkey,feedback.routingkey
-server:
-  #port: 8090
 springdoc:
   api-docs:
     path: /api/jeu/docs

@@ -8,6 +8,6 @@ mysql:
 
 volume:
   storage: 1Gi
-  hostPath: /mnt/data/mysql
+  hostPath: /mnt/data/mysql/actuality
 
 

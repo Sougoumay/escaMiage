@@ -5,10 +5,6 @@ image:
   tag: latest
   pullPolicy: ifNotPresent
 
-mysql:
-  password: notification-password
-  rootPassword: notification-super-secret
-  user: notification-user
 
 database:
   enabled: true
